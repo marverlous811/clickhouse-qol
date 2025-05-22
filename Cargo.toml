@@ -1,11 +1,11 @@
 [package]
-name = "clickhouse-tools"
+name = "clickhouse-qol"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
 tokio = { version = "1", features = ["full"] }
-clickhouse = { version = "0.13", features = ["time"]}
+clickhouse = { version = "0.13", features = ["time", "inserter"]}
 log = "0.4"
 serde = { version = "1.0", features = ["derive"] }
 chrono = "0.4"

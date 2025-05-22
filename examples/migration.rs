@@ -1,4 +1,4 @@
-use clickhouse_tools::migrations::ClickhouseMigrator;
+use clickhouse_qol::migrations::ClickhouseMigrator;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {

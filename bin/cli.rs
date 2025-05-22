@@ -44,7 +44,7 @@ async fn main() -> anyhow::Result<()> {
         .init();
 
     let migrator =
-        clickhouse_tools::migrations::ClickhouseMigrator::new(&args.database_endpoint, &args.migration_directory)
+        clickhouse_qol::migrations::ClickhouseMigrator::new(&args.database_endpoint, &args.migration_directory)
             .await
             .map_err(|e| {
                 log::error!("Failed to create migrator: {}", e);
