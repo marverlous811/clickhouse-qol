@@ -2,6 +2,8 @@
 name = "clickhouse-qol"
 version = "0.1.0"
 edition = "2021"
+description = "Quality of Life tools for ClickHouse"
+license = "MIT"
 
 [dependencies]
 tokio = { version = "1", features = ["full"] }
