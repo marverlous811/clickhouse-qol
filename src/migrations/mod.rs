@@ -19,22 +19,18 @@ impl ClickhouseMigration {
         let name = path
             .clone()
             .file_name()
-            .ok_or_else(|| {
-                ClickhouseToolError::InvaidArgs("Invalid migration file name".to_string())
-            })?
+            .ok_or_else(|| ClickhouseToolError::InvaidArgs("Invalid migration file name".to_string()))?
             .to_os_string()
             .into_string()
-            .map_err(|_| {
-                ClickhouseToolError::InvaidArgs("Invalid migration file name".to_string())
-            })?;
+            .map_err(|_| ClickhouseToolError::InvaidArgs("Invalid migration file name".to_string()))?;
 
-        let (version_str, name) = name.split_once('_').ok_or_else(|| {
-            ClickhouseToolError::InvaidArgs("Invalid migration file name".to_string())
-        })?;
+        let (version_str, name) = name
+            .split_once('_')
+            .ok_or_else(|| ClickhouseToolError::InvaidArgs("Invalid migration file name".to_string()))?;
 
-        let version = version_str.parse::<u64>().map_err(|_| {
-            ClickhouseToolError::InvaidArgs("Invalid migration file name".to_string())
-        })?;
+        let version = version_str
+            .parse::<u64>()
+            .map_err(|_| ClickhouseToolError::InvaidArgs("Invalid migration file name".to_string()))?;
 
         Ok(Self {
             version,
@@ -44,14 +40,12 @@ impl ClickhouseMigration {
     }
 
     pub async fn get_up_query(&self) -> Result<String, ClickhouseToolError> {
-        tokio::fs::read_to_string(&self.path.join("up.sql"))
-            .await
-            .map_err(|_| {
-                ClickhouseToolError::IoError(std::io::Error::new(
-                    std::io::ErrorKind::Other,
-                    "Failed to read migration file",
-                ))
-            })
+        tokio::fs::read_to_string(&self.path.join("up.sql")).await.map_err(|_| {
+            ClickhouseToolError::IoError(std::io::Error::new(
+                std::io::ErrorKind::Other,
+                "Failed to read migration file",
+            ))
+        })
     }
 
     pub async fn get_down_query(&self) -> Result<String, ClickhouseToolError> {
@@ -82,9 +76,7 @@ mod test {
 
     #[test]
     fn test_clickhouse_migration_in_directory() {
-        let migration = ClickhouseMigration::from_file(
-            "./clickhouse/migrations/20230101_001_create_users".to_string(),
-        );
+        let migration = ClickhouseMigration::from_file("./clickhouse/migrations/20230101_001_create_users".to_string());
 
         assert!(migration.is_ok());
         let migration = migration.unwrap();
@@ -129,12 +121,9 @@ impl ClickhouseMigrator {
         let migration = if migration_exist.is_empty() {
             migration
         } else {
-            let last_migration =
-                migration_exist
-                    .first()
-                    .ok_or(ClickhouseToolError::InternalError(
-                        "No migration found".to_string(),
-                    ))?;
+            let last_migration = migration_exist
+                .first()
+                .ok_or(ClickhouseToolError::InternalError("No migration found".to_string()))?;
             migration
                 .into_iter()
                 .filter(|m| m.version > last_migration.version)
@@ -183,8 +172,7 @@ impl ClickhouseMigrator {
             .map_err(|e| ClickhouseToolError::IoError(e))?
         {
             if entry.file_type().await?.is_dir() {
-                let migration =
-                    ClickhouseMigration::from_file(entry.path().to_string_lossy().to_string())?;
+                let migration = ClickhouseMigration::from_file(entry.path().to_string_lossy().to_string())?;
                 migrations.push(migration);
             }
         }

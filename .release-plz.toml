@@ -1,0 +1,4 @@
+[workspace]
+
+[changelog]
+protect_breaking_commits = true

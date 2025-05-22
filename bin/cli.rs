@@ -43,15 +43,13 @@ async fn main() -> anyhow::Result<()> {
         .with(EnvFilter::from_default_env())
         .init();
 
-    let migrator = clickhouse_tools::migrations::ClickhouseMigrator::new(
-        &args.database_endpoint,
-        &args.migration_directory,
-    )
-    .await
-    .map_err(|e| {
-        log::error!("Failed to create migrator: {}", e);
-        e
-    })?;
+    let migrator =
+        clickhouse_tools::migrations::ClickhouseMigrator::new(&args.database_endpoint, &args.migration_directory)
+            .await
+            .map_err(|e| {
+                log::error!("Failed to create migrator: {}", e);
+                e
+            })?;
 
     match args.command {
         Command::Up(args) => {
