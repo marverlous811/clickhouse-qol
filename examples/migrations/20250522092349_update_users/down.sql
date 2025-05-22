@@ -1,0 +1,3 @@
+-- down migration
+ALTER TABLE users
+DROP COLUMN IF EXISTS age;

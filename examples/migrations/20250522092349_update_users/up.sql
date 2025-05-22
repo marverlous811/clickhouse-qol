@@ -1,0 +1,3 @@
+-- up migration
+ALTER TABLE users
+ADD COLUMN IF NOT EXISTS age UInt8 DEFAULT 0;

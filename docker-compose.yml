@@ -1,0 +1,16 @@
+services:
+  clickhouse:
+    image: clickhouse/clickhouse-server:24.11-alpine
+    restart: unless-stopped
+    ports:
+      - 8123:8123
+      - 9004:9004
+      - 9005:9005
+    environment:
+      CLICKHOUSE_USER: admin
+      CLICKHOUSE_PASSWORD: 123456
+      CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: 1
+    volumes:
+      - ./data/clickhouse:/var/lib/clickhouse
+      - ./data/log:/var/log/clickhouse-server
+      - ./config/clickhouse/clickhouse.xml:/etc/clickhouse-server/config.xml:ro
