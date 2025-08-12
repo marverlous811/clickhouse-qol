@@ -5,6 +5,7 @@ use clickhouse_operations::{create_migrations_table, get_migrations_in_database}
 use crate::{error::ClickhouseToolError, init_client};
 
 mod clickhouse_operations;
+mod migration;
 
 #[derive(Debug, Clone)]
 pub struct ClickhouseMigration {

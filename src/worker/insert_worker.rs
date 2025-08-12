@@ -76,7 +76,9 @@ where
                         if left.as_millis() <= 100 {
                             match inserter.commit().await {
                                 Ok(res) => {
-                                    log::info!("commit result: {:?}", res);
+                                    if res.rows > 0 {
+                                        log::info!("commit result: {:?}", res);
+                                    }
                                     current = 0;
                                 }
                                 Err(e) => {
