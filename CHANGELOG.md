@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2](https://github.com/marverlous811/clickhouse-qol/compare/v0.1.1...v0.1.2) - 2025-08-12
+
+### Added
+
+- remove sqlx package
+
+### Other
+
+- Merge branch 'main' of github.com:marverlous811/clickhouse-qol
+
 ## [0.1.1](https://github.com/marverlous811/clickhouse-qol/compare/v0.1.0...v0.1.1) - 2025-05-22
 
 ### Added
